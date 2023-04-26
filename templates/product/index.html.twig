@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProductController!{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Filtre</h3>
+                <div>{{ form_row(form.nom) }}</div>
+                <div>{{ form_row(form.categories) }}</div>
+                <div><button class="btn btn-info btn-sm">{{ button_label|default('Chercher') }}<i class="fa fa-search p-1"></i></button></div>
+        </div>
+        <div class="col-md-9">  
+            <h3>Nos produits</h3>
+            <div class="row">
+                {% for produit in produits %}
+                    <div class="col-md-4 p-2 text-center">
+                        <div class="card" >
+                            <img class="card-img-top" src="{{asset('image_produits/' ~ produit.illustration)}}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{produit.nom }}</h5>
+                                <p class="card-text">{{ produit.sousTitre}}</p>
+                                <p><span class="card-text text-break span">{{ (produit.prix/100) |number_format(2)}} €</span></p>
+                                <a href="{{path('app_show_product', { slug : produit.slug })}}" class="btn btn-primary">Détails</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+ 
