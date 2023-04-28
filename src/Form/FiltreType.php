@@ -23,7 +23,7 @@ class FiltreType extends AbstractType
                     'class' => 'form-control-sm'
                 ]
             ])
-            ->add('categories', EntityType::class,[
+            ->add('categorie', EntityType::class,[
                 'class' => Categorie::class,
                 'label' => false,
                 'required' => false,

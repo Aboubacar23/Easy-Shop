@@ -48,18 +48,18 @@ class ProduitRepository extends ServiceEntityRepository
     public function findByFiltre(Filtre $filtre){
         $query = $this->createQueryBuilder('p')
         ->select('c', 'p')
-        ->join('p.categorie', 'c');
+        ->join('p.categorie', 'c'); 
 
-        if(isEmpty($filtre->categories)){
+        if(!empty($filtre->categorie)){
             $query = $query
-                ->andWhere('c.id IN (:categories)')
-                ->setParameter('categories', $filtre->categories);
+                ->andWhere('c.id IN (:categorie)')
+                ->setParameter('categorie', $filtre->categorie);
         }
-
-        if(isEmpty($filtre->nom)){
-            $query = $query
+ 
+        if(!empty($filtre->nom)){
+            $query = $query 
                 ->andWhere('p.nom LIKE :nom')
-                ->setParameter('nom', '%$filtre->nom%');
+                ->setParameter('nom', "%{$filtre->nom}%");
         }
 
         return $query->getQuery()->getResult();

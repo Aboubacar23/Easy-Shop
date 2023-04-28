@@ -6,9 +6,11 @@
     <div class="row">
         <div class="col-md-3">
             <h3>Filtre</h3>
+            {{ form_start(form) }}
                 <div>{{ form_row(form.nom) }}</div>
-                <div>{{ form_row(form.categories) }}</div>
+                <div>{{ form_row(form.categorie) }}</div>
                 <div><button class="btn btn-info btn-sm">{{ button_label|default('Chercher') }}<i class="fa fa-search p-1"></i></button></div>
+            {{ form_end(form) }}
         </div>
         <div class="col-md-9">  
             <h3>Nos produits</h3>

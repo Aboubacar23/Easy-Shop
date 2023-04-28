@@ -16,7 +16,7 @@ class Filtre
     /**
      * @var Categorie[]
     */
-    public $categories = [];
+    public $categorie = [];
 
 
 

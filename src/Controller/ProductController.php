@@ -12,19 +12,22 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProductController extends AbstractController
 {
-    #[Route('/nos-produit', name: 'app_product' , methods: ['POST', 'GET'])]
+    #[Route('/', name: 'app_product' , methods: ['POST', 'GET'])]
     public function index(ProduitRepository $produitRepository, Request $request): Response
     {
         $filtre = new Filtre();
-        $produits = $produitRepository->findAll();
 
         $form = $this->createForm(FiltreType::class, $filtre);
         $form->handleRequest($request); 
 
         if($form->isSubmitted() && $form->isValid())
         {
+            //$search = $form->getData();
+            //d($search);
 
             $produits = $produitRepository->findByFiltre($filtre);
+        }else{
+            $produits = $produitRepository->findAll();
         }
 
         return $this->render('product/index.html.twig', [
