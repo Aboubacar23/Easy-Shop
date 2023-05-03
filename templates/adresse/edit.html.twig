@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Adresse{% endblock %}
+
+{% block body %}
+<h3>Modifier une addresse</h3>
+<a href="{{ path('app_adresse_index') }}" class="float-right">Retour</a>
+<hr>
+{{ include('adresse/_form.html.twig', {'button_label': 'Modifier'}) }}
+<hr>
+{% endblock %}

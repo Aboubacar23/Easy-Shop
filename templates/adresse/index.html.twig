@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adresse index{% endblock %}
+
+{% block body %}
+    <a href="{{ path('app_adresse_new') }}" class="btn btn-info btn-sm float-right">Ajouter une adresse</a>
+    <h3>Mes adresses</h3>
+    C'est dans cet espace que vous allez pouvoir gérer toutes vos adresses <br>
+    <a href="{{ path('app_compte') }}">Retour</a>
+    <hr>
+    {% if app.user.adresses | length == 0%}
+        <p class="text-center">Vous avez pas encore ajouté d'adresse dans votre compte client</p>
+    {% else %}
+        <h3>Vue de mes adresses</h3>
+        <div class="row">
+            {% for item in app.user.adresses %}
+                <div class="col-md-4">
+                    <div class="card" style="max-width:20rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ item.libelle }}</h5>
+                            <p class="card-text">
+                                {{item.adresse}}<br>
+                                {{item.postale }} - {{item.ville}} - {{ item.pays }}
+                            </p>
+                            <a href="{{path('app_adresse_edit', {'id' : item.id})}}">Modifier</a> | <a href="{{path('app_adresse_delete', {'id' : item.id})}}" onclick="confirm('Vpulez-vous vraiment supprimer !')">Supprimer</a>
+                        </div>
+                    </div>
+                </div>                
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{#
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Libelle</th>
+                <th>Prenom</th>
+                <th>Compagnie</th>
+                <th>Adresse</th>
+                <th>Postale</th>
+                <th>Ville</th>
+                <th>Pays</th>
+                <th>Telephone</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for adresse in adresses %}
+            <tr>
+                <td>{{ adresse.id }}</td>
+                <td>{{ adresse.nom }}</td>
+                <td>{{ adresse.libelle }}</td>
+                <td>{{ adresse.prenom }}</td>
+                <td>{{ adresse.compagnie }}</td>
+                <td>{{ adresse.adresse }}</td>
+                <td>{{ adresse.postale }}</td>
+                <td>{{ adresse.ville }}</td>
+                <td>{{ adresse.pays }}</td>
+                <td>{{ adresse.telephone }}</td>
+                <td>
+                    <a href="{{ path('app_adresse_show', {'id': adresse.id}) }}">show</a>
+                    <a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+#}
+{% endblock %}

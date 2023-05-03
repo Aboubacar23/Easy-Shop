@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Adresse index{% endblock %}
+
+{% block body %}
+    <h3>Mon compte</h3>
+    Bienvenue {{app.user.nom }} dans votre compte client<br>
+    C'est dans ce espace que vous allez pouvoir gérer toutes vos information<br>
+    <hr>
+    <ul>
+        <li><a href="#">Modifier mon mot de passe</a></li>
+        <li><a href="{{ path('app_adresse_index') }}">Gérer mes adresses</a></li>
+        <li><a href="{{ path('app_commande_new') }}">Mes commandes</a></li>
+    </ul>
+    
+    <hr>
+{% endblock %}

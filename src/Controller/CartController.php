@@ -18,16 +18,26 @@ class CartController extends AbstractController
     {
         $carts = $session->get('cart');
         $cartComplet = [];
-        foreach ($carts as $id => $quantite)
-        {
-            $cartComplet[] = [
-                'produit' => $produitRepository->findOneById($id),
-                'quatite' => $quantite
-            ];
+        
+        if($carts){
+            foreach ($carts as $id => $quantite)
+            {
+                $produits = $produitRepository->findOneById($id);
+                if(!$produits)
+                {
+                    unset($carts[$id]);
+                    $session->set('cart', $carts);
+                    continue;
+                }
+                $cartComplet[] = [
+                    'produit' => $produits,
+                    'quatite' => $quantite
+                ];
+            }
         }
 
         //dd($cartComplet);
-      //  $session->clear();
+        //$session->clear();
         return $this->render('cart/index.html.twig', [
             'carts' => $cartComplet,
         ]);

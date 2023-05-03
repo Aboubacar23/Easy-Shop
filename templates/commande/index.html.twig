@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande index{% endblock %}
+
+{% block body %}
+    <h3>Passer votre commande</h3>
+    <p>Choisissez vos préférences avant de passer votre commande </p>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            {% set formHtml %}
+                {{form_start(form, {action:path('app_commande_new')})}}
+                <div class="row">
+                    <div class="col-md-12">{{form_row(form.adresses)}}</div>
+                    <div class="col-md-12">{{form_row(form.transporteur)}}</div>
+                </div>
+                <div class="row">
+                    <button class="btn btn-primary btn-sm">{{ button_label|default('Valider ma commande') }}</button>
+                </div>
+                {{form_end(form)}}
+            {% endset %}
+            {{ formHtml|replace({'[br]': '<br/>'})| raw }}
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <b>Récap de ma commande</b><br>                        
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Produit</th>
+                                <th>Prix</th>
+                                <th>Quatité</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% set total = 0 %}
+                        {% for item in carts %}
+                        {% set total = total + (item.produit.prix * item.quatite) %}
+                          <tr>
+                            <th><img height="60px" class="card-img-top" src="{{asset('image_produits/' ~ item.produit.illustration)}}" alt="Card image cap"></th>
+                            <td>{{item.produit.nom}}</td>
+                            <td>{{ (item.produit.prix/100) |number_format(2)}} €</td>
+                            <td>{{item.quatite}}</td>
+                            <td>{{ (item.produit.prix * item.quatite / 100) |number_format('2') }} €</td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4">Total</th>
+                                <th>{{ (total / 100) |number_format('2') }} €</th>
+                            </tr>
+                        </tfoot>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+ 

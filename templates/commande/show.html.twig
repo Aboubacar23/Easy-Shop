@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande{% endblock %}
+
+{% block body %}
+<h3>Mon récapitulatif</h3>
+<p>Vérifier vos informations avant de payer votre commande </p>
+<hr>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-check">
+            <strong>Mon adresse de livraison</strong><br>
+            {{ livraisons | raw }}
+        </div>
+        <div class="form-check">
+            <strong>Mon Transporteur</strong><br>
+            {{ transporteur.nom}} <br>
+            {{ transporteur.description}} <br>
+            {{ transporteur.prix}} €
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body">
+                <b>Ma commande</b><br>                        
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Produit</th>
+                            <th>Prix</th>
+                            <th>Quatité</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% set total = 0 %}
+                    {% for item in carts %}
+                    {% set total = total + (item.produit.prix * item.quatite) %}
+                        <tr>
+                        <th><img height="60px" class="card-img-top" src="{{asset('image_produits/' ~ item.produit.illustration)}}" alt="Card image cap"></th>
+                        <td>{{item.produit.nom}}</td>
+                        <td>{{ (item.produit.prix/100) |number_format(2)}} €</td>
+                        <td>{{item.quatite}}</td>
+                        <td>{{ (item.produit.prix * item.quatite / 100) |number_format('2') }} €</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4">Sous Total</th>
+                            <th>{{ (total / 100) |number_format('2') }} €</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4">Livaraison</th>
+                            <th>{{ transporteur.prix |number_format('2') }} €</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4">Total</th>
+                            <th>{{ (total / 100) + transporteur.prix |number_format('2') }} €</th>
+                        </tr>
+                    </tfoot>
+                    </table>
+            </div>
+        </div>
+        <div class="row">
+            <a href="" class="btn btn-success btn-block mt-3">Payer | {{ (total / 100) + transporteur.prix |number_format('2') }} €</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
