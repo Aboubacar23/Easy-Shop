@@ -37,6 +37,9 @@ class Commande
     #[ORM\Column]
     private ?bool $isPaie = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $reference = null;
+
     public function __construct()
     {
         $this->lcommandes = new ArrayCollection();
@@ -47,6 +50,15 @@ class Commande
         return $this->id;
     }
 
+    //une fonction getTotal
+    public function getTotal(){
+        $total = null;
+        foreach($this->getLcommandes()->getValues() as $p){
+            $total = $total + ($p->getPrix()* $p->getQuatite());
+        }
+        return $total;
+    }
+    
     public function getUser(): ?User
     {
         return $this->user;
@@ -145,6 +157,18 @@ class Commande
     public function setIsPaie(bool $isPaie): self
     {
         $this->isPaie = $isPaie;
+
+        return $this;
+    }
+
+    public function getReference(): ?string
+    {
+        return $this->reference;
+    }
+
+    public function setReference(string $reference): self
+    {
+        $this->reference = $reference;
 
         return $this;
     }

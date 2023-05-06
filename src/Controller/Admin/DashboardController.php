@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\User;
 use App\Entity\Produit;
 use App\Entity\Categorie;
+use App\Entity\Commande;
 use App\Entity\Transporteur;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,8 +22,8 @@ class DashboardController extends AbstractDashboardController
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
-        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        // return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
+       //  $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+         //return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
 
         // Option 2. You can make your dashboard redirect to different pages depending on the user
         //
@@ -34,7 +35,7 @@ class DashboardController extends AbstractDashboardController
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
         return $this->render('admin/dashboard.html.twig');
-    }
+    } 
 
     public function configureDashboard(): Dashboard
     {
@@ -48,6 +49,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('User', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Catégorie', 'fas fa-list-alt', Categorie::class);
         yield MenuItem::linkToCrud('Produits', 'fas fa-tag', Produit::class);
+        yield MenuItem::linkToCrud('Commande', 'fas fa-shopping-cart', Commande::class);
         yield MenuItem::linkToCrud('Transporteur', 'fas fa-truck', Transporteur::class);
     }
 }

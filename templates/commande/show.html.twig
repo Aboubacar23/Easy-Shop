@@ -1,12 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Commande{% endblock %}
-
+    {#
+        on affiche le js.stripe.com/v3
+    #}
+{% block javascript %}
+    <script src="https://js.stripe.com/v3/"></script>
+{% endblock %}
 {% block body %}
 <h3>Mon récapitulatif</h3>
 <p>Vérifier vos informations avant de payer votre commande </p>
 <hr>
-<div class="row">
+<div class="row mb-5">
     <div class="col-md-6">
         <div class="form-check">
             <strong>Mon adresse de livraison</strong><br>
@@ -60,11 +65,13 @@
                             <th>{{ (total / 100) + transporteur.prix |number_format('2') }} €</th>
                         </tr>
                     </tfoot>
-                    </table>
+                </table>
             </div>
         </div>
         <div class="row">
-            <a href="" class="btn btn-success btn-block mt-3">Payer | {{ (total / 100) + transporteur.prix |number_format('2') }} €</a>
+            <form action="/stripe/checkout/{{ reference }}" method="POST">
+                <button type="submit" id="checkout-button">Payer | {{ (total / 100) + transporteur.prix |number_format('2') }} €</button>
+            </form>
         </div>
     </div>
 </div>
